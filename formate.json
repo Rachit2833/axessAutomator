@@ -1,0 +1,551 @@
+[
+  [
+    {
+      "heading": "Cultural Preferences",
+      "questions": [
+        {
+          "answer": " API result: { success: true, response: '{}' }",
+          "type": "checkbox",
+          "code": null,
+          "question": "Respond to each option below.",
+          "id": 3000,
+          "options": [
+            {
+              "id": 2002,
+              "label": "Spiritual or cultural practice that impacts healthcare"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "heading": "Patient Living Situation",
+      "questions": [
+        {
+          "answer": "{ qn_id: 3001, option_ids: [ 2027 ], t_id: [ 'SSL1', 'SSL2' ] }",
+          "type": "radio",
+          "code": "(M1100)",
+          "question": "Which of the following best describes the patient's residential circumstance and availability of assistance? (Check one box only.)",
+          "id": 3001,
+          "options": [
+            {
+              "id": 2018,
+              "label": "a. Patient lives alone (Living Arrangement)"
+            },
+            {
+              "id": 2019,
+              "label": "a. Patient lives alone (Around the Clock)"
+            },
+            {
+              "id": 2020,
+              "label": "a. Patient lives alone (Regular Daytime)"
+            },
+            {
+              "id": 2021,
+              "label": "a. Patient lives alone (Regular Nighttime)"
+            },
+            {
+              "id": 2022,
+              "label": "a. Patient lives alone (Occasional/ Short-Term Assistance)"
+            },
+            {
+              "id": 2023,
+              "label": "b. Patient lives with other person(s) in the home (Living Arrangement)"
+            },
+            {
+              "id": 2024,
+              "label": "b. Patient lives with other person(s) in the home (Around the Clock)"
+            },
+            {
+              "id": 2025,
+              "label": "b. Patient lives with other person(s) in the home (Regular Daytime)"
+            },
+            {
+              "id": 2026,
+              "label": "b. Patient lives with other person(s) in the home (Regular Nighttime)"
+            },
+            {
+              "id": 2027,
+              "label": "b. Patient lives with other person(s) in the home (Occasional/ Short-Term Assistance)"
+            },
+            {
+              "id": 2028,
+              "label": "c. Patient lives in congregate situation (e.g., assisted living, residential care home) (Living Arrangement)"
+            },
+            {
+              "id": 2029,
+              "label": "c. Patient lives in congregate situation (e.g., assisted living, residential care home) (Around the Clock)"
+            },
+            {
+              "id": 2030,
+              "label": "c. Patient lives in congregate situation (e.g., assisted living, residential care home) (Regular Daytime)"
+            },
+            {
+              "id": 2031,
+              "label": "c. Patient lives in congregate situation (e.g., assisted living, residential care home) (Regular Nighttime)"
+            },
+            {
+              "id": 2032,
+              "label": "c. Patient lives in congregate situation (e.g., assisted living, residential care home) (Occasional/ Short-Term Assistance)"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "heading": "Transportation",
+      "questions": [
+        {
+          "answer":" [ { qn_id: 3003, option_ids: [ 2040 ], t_id: [ 'SSL3' ] } ]",
+          "type": "checkbox",
+          "code": "(A1250)",
+          "question": "Transportation (NACHC ©)",
+          "id": 3003,
+          "options": [
+            {
+              "id": 2038,
+              "label": "A. Yes, it has kept me from medical appointments or from getting my medications"
+            },
+            {
+              "id": 2039,
+              "label": "B. Yes, it has kept me from non-medical meetings, appointments, work or from getting things that I need"
+            },
+            {
+              "id": 2040,
+              "label": "C. No"
+            },
+            {
+              "id": 2041,
+              "label": "X.  Patient unable to respond"
+            },
+            {
+              "id": 2042,
+              "label": "Y. Patient declines to respond"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "heading": "Health Literacy",
+      "questions": [
+        {
+          "answer":"{ qn_id: 3004, option_ids: [ 2054 ], t_id: [ 'SSL4' ] }",
+          "type": "radio",
+          "code": "(B1300)",
+          "question": "Health Literacy (from Creative Commons ©)",
+          "id": 3004,
+          "options": [
+            {
+              "label": "0. Never",
+              "id": 2050
+            },
+            {
+              "label": "1. Rarely",
+              "id": 2051
+            },
+            {
+              "label": "2. Sometimes",
+              "id": 2052
+            },
+            {
+              "label": "3. Often",
+              "id": 2053
+            },
+            {
+              "label": "4. Always",
+              "id": 2054
+            },
+            {
+              "label": "7. Patient declines to respond",
+              "id": 2055
+            },
+            {
+              "label": "8. Patient unable to respond",
+              "id": 2056
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "heading": "Plan of Care: Psychosocial Assessment",
+      "questions": [
+        {
+          "answer": {
+            "3005": {
+              "option_ids": [
+                2064
+              ],
+              "t_id": [
+                "SSL5"
+              ],
+              "comments": "Home environment safety concerns: narrow passages and long winding staircase"
+            }
+          },
+          "type": "checkbox",
+          "code": null,
+          "question": "Select all that apply. Selections will populate in the Plan of Care.",
+          "id": 3005,
+          "options": [
+            {
+              "id": 2063,
+              "label": "No problems identified"
+            },
+            {
+              "id": 2064,
+              "label": "Home environment, altered:"
+            },
+            {
+              "id": 2065,
+              "label": "Suspected abuse/neglect:"
+            },
+            {
+              "id": 2066,
+              "label": "Barriers to health status:"
+            },
+            {
+              "id": 2067,
+              "label": "Community resources needed:"
+            },
+            {
+              "id": 2068,
+              "label": "Community resources providing assistance:"
+            }
+          ],
+          "comments": {
+            "question": "Comments:",
+            "placeholder": ""
+          }
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "heading": "Plan of Care: Caregiver Status",
+      "questions": [
+        {
+          "answer": {
+            "answer": {
+              "3007": {
+                "value": "Primary caregiver is the daughter and provides occasional assistance, primarily driving to appointments; no extensive assistance required.",
+                "t_id": [
+                  "SSL2"
+                ]
+              }
+            }
+          },
+          "type": "textarea",
+          "code": null,
+          "question": "Caregiver Availability/Type of Assistance",
+          "id": 3007,
+          "placeholder": "Enter Caregiver Availability/Type of Assistance"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "heading": "Plan of Care: Safety Measures",
+      "questions": [
+        {
+          "answer": {
+            "qn_id": 3008,
+            "option_ids": [
+              2097,
+              2100,
+              2101,
+              2102,
+              2110,
+              2116,
+              2117
+            ],
+            "t_id": [
+              "C4",
+              "M8",
+              "SSL5",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7"
+            ]
+          },
+          "type": "checkbox",
+          "code": null,
+          "question": "Select all that apply. Selections will populate in the Plan of Care.",
+          "id": 3008,
+          "options": [
+            {
+              "id": 2094,
+              "label": "24-hour supervision"
+            },
+            {
+              "id": 2095,
+              "label": "Aspiration precautions"
+            },
+            {
+              "id": 2096,
+              "label": "Bleeding precautions"
+            },
+            {
+              "id": 2097,
+              "label": "Diabetic: Do not cut nails."
+            },
+            {
+              "id": 2098,
+              "label": "DME and electrical safety"
+            },
+            {
+              "id": 2099,
+              "label": "Elevate head of bed"
+            },
+            {
+              "id": 2100,
+              "label": "Emergency/disaster plan development"
+            },
+            {
+              "id": 2101,
+              "label": "Fall precautions"
+            },
+            {
+              "id": 2102,
+              "label": "Keep pathways clear"
+            },
+            {
+              "id": 2103,
+              "label": "Neutropenic precautions"
+            },
+            {
+              "id": 2104,
+              "label": "O2 precautions"
+            },
+            {
+              "id": 2105,
+              "label": "Presence of animals:"
+            },
+            {
+              "id": 2106,
+              "label": "Prone to skin breakdown precaution"
+            },
+            {
+              "id": 2107,
+              "label": "Prone to fractures precaution"
+            },
+            {
+              "id": 2108,
+              "label": "Proper positioning during meals"
+            },
+            {
+              "id": 2109,
+              "label": "Proper handling of biohazard waste"
+            },
+            {
+              "id": 2110,
+              "label": "Safety in ADLs"
+            },
+            {
+              "id": 2111,
+              "label": "Seizure precautions"
+            },
+            {
+              "id": 2112,
+              "label": "Sharps safety"
+            },
+            {
+              "id": 2113,
+              "label": "Side rails up"
+            },
+            {
+              "id": 2114,
+              "label": "Slow position changes"
+            },
+            {
+              "id": 2115,
+              "label": "Infection control:"
+            },
+            {
+              "id": 2116,
+              "label": "Support during transfer and ambulation"
+            },
+            {
+              "id": 2117,
+              "label": "Use of assistive devices"
+            },
+            {
+              "id": 2118,
+              "label": "Other:"
+            }
+          ]
+        }
+      ]
+    }
+,
+    {
+      "heading": "Plan of Care: Vital Sign Parameters",
+      "questions": [
+        {
+          "answer": {
+            "qn_id": 3017,
+            "value": 72,
+            "option_ids": [],
+            "t_id": [
+              "C3"
+            ]
+          },
+          "type": "number",
+          "code": null,
+          "question": "Pulse Rate (bpm): greater than (>)",
+          "id": 3017,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer": "{ '3020': { value: 72, option_ids: [], t_id: [ 'C3' ] } }",
+          "type": "number",
+          "code": null,
+          "question": "Pulse Rate (bpm): or less than (<)",
+          "id": 3020,
+          "placeholder": "Enter Number"
+        },
+        {
+          "type": "number",
+          "code": null,
+          "question": "Temperature (°F): greater than (>)",
+          "id": 3022,
+          "placeholder": "Enter Number"
+        },
+        {
+          "type": "number",
+          "code": null,
+          "question": "Temperature (°F): or less than (<)",
+          "id": 3025,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer": {
+            "3027": {
+              "value": 77,
+              "option_ids": [],
+              "t_id": [
+                "C3"
+              ]
+            }
+          },
+          "type": "number",
+          "code": null,
+          "question": "Respirations (/min): greater than (>)",
+          "id": 3027,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer": "{ '3030': { value: '77', option_ids: [], t_id: [ 'C3' ] } }",
+          "type": "number",
+          "code": null,
+          "question": "Respirations (/min): or less than (<)",
+          "id": 3030,
+          "placeholder": "Enter Number"
+        },
+        {
+          "type": "number",
+          "code": null,
+          "question": "O2 Saturation (%): less than (<)",
+          "id": 3032,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer": " { '3035': 4, t_id: [ 'P3' ] }",
+          "type": "number",
+          "code": null,
+          "question": "Pain Level (/10): greater than (>)",
+          "id": 3035,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer": "{ '3037': { value: 120, t_id: [ 'C3' ] } }",
+          "type": "number",
+          "code": null,
+          "question": "Systolic Blood Pressure (mmHg): greater than (>)",
+          "id": 3037,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer": {
+            "3040": {
+              "value": 120,
+              "t_id": [
+                "C3"
+              ]
+            }
+          },
+          "type": "number",
+          "code": null,
+          "question": "Systolic Blood Pressure (mmHg): or less than (<)",
+          "id": 3040,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer": "{ qn_id: 3042, value: 80, option_ids: [], t_id: [ 'C3' ] }",
+          "type": "number",
+          "code": null,
+          "question": "Diastolic Blood Pressure (mmHg): greater than (>)",
+          "id": 3042,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer": {
+            "qn_id": 3045,
+            "value": 80,
+            "t_id": [
+              "C3"
+            ]
+          },
+          "type": "number",
+          "code": null,
+          "question": "Diastolic Blood Pressure (mmHg): or less than (<)",
+          "id": 3045,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer":"{ '3047': { value: 90, option_ids: [], t_id: [ 'C5' ] } }",
+          "type": "number",
+          "code": null,
+          "question": "Blood Sugar, Fasting (mg/dL): greater than (>)",
+          "id": 3047,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer":"{ '3050': { value: 90, option_ids: [], t_id: [ 'C5' ] } }",
+          "type": "number",
+          "code": null,
+          "question": "Blood Sugar, Fasting (mg/dL): or less than (<)",
+          "id": 3050,
+          "placeholder": "Enter Number"
+        },
+        {
+          "type": "number",
+          "code": null,
+          "question": "Blood Sugar, Random (mg/dL): greater than (>)",
+          "id": 3052,
+          "placeholder": "Enter Number"
+        },
+        {
+          "answer":"{ '3055': { value: 110, t_id: [ 'C5' ] } }",
+          "type": "number",
+          "code": null,
+          "question": "Blood Sugar, Random (mg/dL): or less than (<)",
+          "id": 3055,
+          "placeholder": "Enter Number"
+        }
+      ]
+    }
+  ]
+]

@@ -1,0 +1,111 @@
+[
+  [
+    {
+      "heading": "Pain Assessment",
+      "questions": [
+        {
+          "type": "select",
+          "code": null,
+          "question": "Has the patient had any pain?",
+          "id": 3149,
+          "options": []
+        },
+        {
+          "type": "select",
+          "code": null,
+          "question": "Nonverbal Pain Assessment",
+          "id": 3150,
+          "options": []
+        },
+        {
+          "type": "select",
+          "code": null,
+          "question": "Nonverbal Pain Assessment Method",
+          "id": 3152,
+          "options": [],
+          "comments": {
+            "question": "Comments:",
+            "placeholder": ""
+          }
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "heading": "Pain Status",
+      "questions": [
+        {
+          "type": "radio",
+          "code": "(J0510)",
+          "question": "Pain Effect on Sleep",
+          "id": 3154,
+          "options": [
+            {
+              "label": "0. Does not apply - I have not had any pain or hurting in the past 5 days",
+              "id": 2407
+            },
+            {
+              "label": "1. Rarely or not at all",
+              "id": 2408
+            },
+            {
+              "label": "2. Occasionally",
+              "id": 2409
+            },
+            {
+              "label": "3. Frequently",
+              "id": 2410
+            },
+            {
+              "label": "4. Almost constantly",
+              "id": 2411
+            },
+            {
+              "label": "8. Unable to answer",
+              "id": 2412
+            }
+          ]
+        },
+        {
+          "type": "radio",
+          "code": null,
+          "question": "Ask patient: \"Over the past 5 days, how much of the time has pain made it hard for you to sleep at night\"",
+          "id": 3155,
+          "options": [
+            {
+              "label": "0. Does not apply - I have not had any pain or hurting in the past 5 days",
+              "id": 2419
+            },
+            {
+              "label": "1. Rarely or not at all",
+              "id": 2420
+            },
+            {
+              "label": "2. Occasionally",
+              "id": 2421
+            },
+            {
+              "label": "3. Frequently",
+              "id": 2422
+            },
+            {
+              "label": "4. Almost constantly",
+              "id": 2423
+            },
+            {
+              "label": "8. Unable to answer",
+              "id": 2424
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "heading": "Training and Education Resources",
+      "questions": []
+    }
+  ]
+]
