@@ -1,5 +1,4 @@
 import CryptoJS from "crypto-js";
-
 const fd = {
     "Admission Date:": "Tid: PD1: 9 September 2025",
     "Referral Source:": "Tid: PD2: Referred by Dr. Wilson",
@@ -193,139 +192,57 @@ async function sendEncryptedRequest(payload) {
 }
 
 // === MAIN FLOW ===
-async function main() {
+export default async function getResponse(data) {
+  const allResponses = [];
+
   try {
+    // 1️⃣ Clean input: remove empty items and parse raw JSON strings
+    const cleanedData = data
+      .filter(item => item && (typeof item === 'object' || typeof item === 'string')) // remove null/undefined
+      .map(item => {
+        if (typeof item === 'string') {
+          // remove ```json fences if present
+          const jsonStr = item.replace(/```json|```/g, '').trim();
+          try {
+            const parsed = JSON.parse(jsonStr);
+            return parsed; // could be an array or object
+          } catch {
+            return item; // fallback to string if parsing fails
+          }
+        }
+        return item; // already an object
+      });
+
     await login();
     await generateEncryptionKey();
 
-    const payloads = [
-        {
-          "type": "number",
-          "code": null,
-          "question": "Pulse Rate (bpm): greater than (>)",
-          "id": 3017,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Pulse Rate (bpm): or less than (<)",
-          "id": 3020,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Temperature (°F): greater than (>)",
-          "id": 3022,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Temperature (°F): or less than (<)",
-          "id": 3025,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Respirations (/min): greater than (>)",
-          "id": 3027,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Respirations (/min): or less than (<)",
-          "id": 3030,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "O2 Saturation (%): less than (<)",
-          "id": 3032,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Pain Level (/10): greater than (>)",
-          "id": 3035,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Systolic Blood Pressure (mmHg): greater than (>)",
-          "id": 3037,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Systolic Blood Pressure (mmHg): or less than (<)",
-          "id": 3040,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Diastolic Blood Pressure (mmHg): greater than (>)",
-          "id": 3042,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Diastolic Blood Pressure (mmHg): or less than (<)",
-          "id": 3045,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Blood Sugar, Fasting (mg/dL): greater than (>)",
-          "id": 3047,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Blood Sugar, Fasting (mg/dL): or less than (<)",
-          "id": 3050,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Blood Sugar, Random (mg/dL): greater than (>)",
-          "id": 3052,
-          "placeholder": "Enter Number"
-        },
-        {
-          "type": "number",
-          "code": null,
-          "question": "Blood Sugar, Random (mg/dL): or less than (<)",
-          "id": 3055,
-          "placeholder": "Enter Number"
-        }
+    console.log(`🚀 Sending ${cleanedData.length} payloads sequentially...`);
 
-    ];
+    // 2️⃣ Process each payload
+    for (const payload of cleanedData) {
+      await generateEncryptionKey();
+      console.log(`\n📦 Sending payload...`);
 
-    console.log(`🚀 Sending ${payloads.length} payloads sequentially...`);
-
-    for (const payload of payloads) {
-      await generateEncryptionKey()
-      console.log(`\n📦 Sending for ${payload.code}`);
       const result = await sendEncryptedRequest(payload);
 
-      try {
-        const parsed = JSON.parse(result.response);
-        console.log("✅ Parsed response:", parsed);
-      } catch {
-        console.log("⚠️ Raw response:", result.response);
+      let parsedResponse;
+      if (typeof result.response === 'string') {
+        try {
+          parsedResponse = JSON.parse(result.response);
+        } catch {
+          parsedResponse = result.response; // fallback to raw string
+        }
+      } else {
+        parsedResponse = result.response; // already parsed
+      }
+
+      // 3️⃣ Flatten the response into allResponses
+      if (Array.isArray(parsedResponse)) {
+        parsedResponse.forEach(item => {
+          if (item && Object.keys(item).length) allResponses.push(item);
+        });
+      } else if (parsedResponse && typeof parsedResponse === 'object' && Object.keys(parsedResponse).length) {
+        allResponses.push(parsedResponse);
       }
     }
 
@@ -333,7 +250,11 @@ async function main() {
   } catch (err) {
     console.error("❌ Error in flow:", err.message);
   }
+
+  return allResponses;
 }
+
+
 
 async function fetchFormFillRequest() {
   const FORM_FILL_URL = "https://api.sahara.care/patient/submitformfillrequest?org_id=ORG-0001&visit_id=ORG-0001/PVISIT-00000005";
@@ -365,5 +286,3 @@ async function fetchFormFillRequest() {
   return data;
 }
 
-
-fetchFormFillRequest();

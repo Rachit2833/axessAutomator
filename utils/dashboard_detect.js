@@ -4,7 +4,7 @@ export async function detectDashboardVersion(page) {
     try {
         // try the "beta" dashboard selector
         const link = await page.waitForSelector(".text-center.white-space-pre.svg-blue-color", {
-            visible: true, timeout: 5000
+            visible: true, timeout: 20000
         });
         console.log("✅ Found dashboard version link (Beta)");
         console.log("Navigating to old one");

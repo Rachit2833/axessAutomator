@@ -1,22 +1,26 @@
 import { increaseOptionId } from "../extract_question.js";
+import getElementXPath from "../utils/generateXpath.js"; // ✅ wrapper for ElementHandle
+
 export default async function detectCheckboxField(el) {
-    // Handle both .checkbox__main and .checkbox-container (O0110 style)
-    const checkboxEls = await el.$$('.checkbox__main, .checkbox-container .notacheck');
-    if (!checkboxEls.length) return null;
+  const checkboxEls = await el.$$('.checkbox__main, .checkbox-container .notacheck');
+  if (!checkboxEls.length) return null;
 
-    const options = [];
+  const options = [];
 
-    for (let box of checkboxEls) {
-        const id= increaseOptionId()
-        const input = await box.$('input[type="checkbox"]');
-        const labelEl = await box.$('label');
+  for (let box of checkboxEls) {
+    const id = increaseOptionId();
+    const input = await box.$('input[type="checkbox"]');
+    const labelEl = await box.$('label');
 
-        if (!input || !labelEl) continue;
+    if (!input || !labelEl) continue;
 
-        const label = await labelEl.evaluate(el => el.textContent.trim());
+    const label = await labelEl.evaluate(el => el.textContent.trim());
 
-        options.push({ id, label, });
-    }
+    // ✅ Generate XPath in browser context via imported helper
+    const xpath = await getElementXPath(box);
 
-    return { type: 'checkbox', options };
+    options.push({ id, label, xpath });
+  }
+
+  return { type: 'checkbox', options };
 }

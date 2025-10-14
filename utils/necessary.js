@@ -13,7 +13,7 @@ export async function getCurrentURL(page) {
     }
 }
 
-export async function saveToJSON(data, filename = "questions.json") {
+export async function saveToJSON(data, filename = "questions.js") {
     try {
         await fs.writeFile(filename, JSON.stringify(data, null, 2), "utf-8");
         console.log(`✅ Saved to ${filename}`);
@@ -58,4 +58,19 @@ export async function getSidebarItems(page) {
     );
 
     return itemsData;
+}
+export function removeXPaths(obj) {
+    if (Array.isArray(obj)) {
+        return obj.map(removeXPaths); // process each element
+    } else if (obj && typeof obj === 'object') {
+        const newObj = {};
+        for (const [key, value] of Object.entries(obj)) {
+            if (key !== 'xpath') { // skip xpath
+                newObj[key] = removeXPaths(value); // recurse
+            }
+        }
+        return newObj;
+    } else {
+        return obj; // primitive values
+    }
 }

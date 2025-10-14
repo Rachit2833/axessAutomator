@@ -1,3 +1,5 @@
+import getElementXPath from '../utils/generateXpath.js';
+
 export default async function fetchSelectOptions(page, col, data) {
     if (data.type !== 'select') return data;
 
@@ -14,16 +16,22 @@ export default async function fetchSelectOptions(page, col, data) {
 
         await page.waitForTimeout(500); // allow dropdown to render
 
-        const options = await page.evaluate(sel => {
-            const dropdown = sel.querySelector('.select-v2__dropdown')
-                || sel.parentElement.querySelector('.select-v2__dropdown');
-            if (!dropdown) return [];
-            return Array.from(dropdown.querySelectorAll('li'))
-                .map(li => li.textContent.trim())
-                .filter(Boolean);
-        }, selectHandle);
+        const optionHandles = await selectHandle.$$('.select-v2__dropdown li, .select-v2 li');
+        const options = [];
 
-        data.options = Array.from(new Set(options)); // remove duplicates
+        for (const li of optionHandles) {
+            const text = (await (await li.getProperty('textContent')).jsonValue()).trim();
+            if (!text) continue;
+
+            const xpath = await getElementXPath(li); // ✅ XPath per option
+         
+            options.push({ text, xpath });
+        }
+
+        data.options = options;
+
+        // XPath for the select element itself
+        data.xpath = await getElementXPath(selectHandle);
 
         await page.keyboard.press('Escape');
         await page.waitForTimeout(300);
@@ -33,3 +41,4 @@ export default async function fetchSelectOptions(page, col, data) {
 
     return data;
 }
+

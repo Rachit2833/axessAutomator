@@ -1,13 +1,16 @@
-import path from 'path';
+import path, { resolve } from 'path';
 import puppeteer from 'puppeteer-core';
-
+import getResponse from "./fetchAnswer.js"
 import { loginAxxess } from "./utils/login.js"
 import { detectDashboardVersion } from './utils/dashboard_detect.js';
-import { getCurrentURL, getSidebarItems, saveToJSON, selectDateRangeDropdown } from "./utils/necessary.js"
+import { getCurrentURL, getSidebarItems, removeXPaths, saveToJSON, selectDateRangeDropdown } from "./utils/necessary.js"
 import { navigateSidebarPrefetched } from './utils/navigate_sidebar.js';
 import extractQuestions, { optionsId } from './extract_question.js';
+import chunkQuestion from './chunkQuestion.js';
+import mapResponse from "./utils/mapResponse.js"
+import performActions from './utils/permormAction.js';
 const COOKIES_PATH = path.resolve('./cookies.json');
-const Browser_ID = '748fd01f-6275-4904-ab8e-b3d1424ad8c1'
+const Browser_ID = '1f6b3466-33f8-4e38-aa51-c066d552b6e4'
 
 
 
@@ -137,7 +140,7 @@ async function runPuppeteer() {
         );
         let allData = {};
         const sidebarItems = await getSidebarItems(page);
-        for (let i = 4; i < sidebarItems.length; i++) {
+        for (let i = 1; i < sidebarItems.length; i++) {
             const section = sidebarItems[i];
             const sectionName = section.text || section; // depends on how getSidebarItems is returning
 
@@ -175,10 +178,19 @@ runPuppeteer();
 
 async function processPage(page) {
     const radioBox = await extractQuestions(page)
-    console.log(radioBox);
+    const cleanedObject= removeXPaths(radioBox)
+    console.log(cleanedObject);
     console.log("writitng");
-    await saveToJSON(radioBox)
-    console.log("written");
+    await saveToJSON(cleanedObject)
+    const questionChunk = chunkQuestion(cleanedObject)
+    const response = await getResponse(questionChunk)
+    await saveToJSON(response,"response.js")
+    const searchedQuestion = mapResponse(radioBox,response)
+    await saveToJSON(searchedQuestion,"action.js")
+    console.log("waiting for action filling to start");
+    await new Promise(resolve=>setTimeout(resolve, 10000))
+    console.log("startied filling");
+    await performActions(page,searchedQuestion)
 }
 
 
@@ -331,6 +343,5 @@ async function processPage(page) {
 
 //     return results;
 // }
-
 
 

@@ -1,24 +1,31 @@
-import { increaseOptionId} from "../extract_question.js";
+import { increaseOptionId } from "../extract_question.js";
+import getXPathFromHandle  from "../utils/generateXpath.js"; 
 
 export default async function detectRadioField(el) {
-    // Find all radio inputs
-    const radios = await el.$$('.radio-container .ac-radio input[type="radio"]');
-    if (!radios.length) return null;
+  // Find all radio inputs
+  const radios = await el.$$('.radio-container .ac-radio input[type="radio"]');
+  if (!radios.length) return null;
 
-    // Get labels and values
-    const options = await Promise.all(
-        radios.map((radio) => radio.evaluate(input => {
-            const labelEl = input.closest('.ac-radio')?.querySelector('label');
-            if (!labelEl || input.disabled) return null;
-            return {
-                label: labelEl.textContent.trim()
-            };
-        }))
-    );
+  const options = [];
 
-    options.forEach(opt => {
-        opt.id = increaseOptionId();
-    })
+  for (const radio of radios) {
+    // Evaluate in browser to get label text
+    const label = await radio.evaluate(input => {
+      const labelEl = input.closest('.ac-radio')?.querySelector('label');
+      return labelEl && !input.disabled ? labelEl.textContent.trim() : null;
+    });
 
-    return { type: 'radio', options: options.filter(Boolean) };
+    if (!label) continue;
+
+    // ✅ Get XPath using imported helper
+    const xpath = await getXPathFromHandle(radio);
+
+    options.push({
+      id: increaseOptionId(),
+      label,
+      xpath,
+    });
+  }
+
+  return { type: 'radio', options };
 }

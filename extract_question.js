@@ -3,14 +3,15 @@ import detectInputField from './elementsDetectors/inputs_detectors.js';
 import detectRadioField from './elementsDetectors/radio_detectors.js';
 import fetchSelectOptions from './elementsDetectors/select_option_detector.js';
 import detectTextArea from "./elementsDetectors/textarea_detector.js"
-import  mergeExtraTextareas from "./utils/mergeComments.js"
+import mergeExtraTextareas from "./utils/mergeComments.js"
 import detectLivingSituationField from "./elementsDetectors/table_radio_detector.js"
 import customActions, { logBanner } from "./customActions.js"
-export let optionsId=2000
-let questionId=3000
-export function increaseOptionId(){
-     optionsId++
-     return optionsId
+import getElementXPath from './utils/generateXpath.js';
+export let optionsId = 2000
+let questionId = 3000
+export function increaseOptionId() {
+    optionsId++
+    return optionsId
 }
 const fieldSelectors = [
     '.vitals__bp-box',
@@ -89,9 +90,9 @@ export default async function extractQuestions(page) {
         const questionColumns = await section.$$(fieldSelectors.join(', '));
         console.log(questionColumns.length);
 
-        for (let  col of questionColumns) {
+        for (let col of questionColumns) {
             const result = { type: null, code: null, question: null };
-            let id=questionId++
+            let id = questionId++
             let question = null;
 
             const className = await col.evaluate(el => el.className);
@@ -137,7 +138,7 @@ export default async function extractQuestions(page) {
             if (!question) continue;
 
             result.question = question;
-            result.id=id
+            result.id = id
 
             const codeHandle = await col.$('.ac-moo-label-code');
             if (codeHandle) {
@@ -153,21 +154,27 @@ export default async function extractQuestions(page) {
                 finalData = { ...finalData, ...await detectRadioField(col) };
             } else if (await detectInputField(col)) {
                 finalData = { ...finalData, ...await detectInputField(col) };
-            }else if (await detectTextArea(col)) {
+            } else if (await detectTextArea(col)) {
                 finalData = { ...finalData, ...await detectTextArea(col) };
-            }else if (await detectLivingSituationField(col)) {
+            } else if (await detectLivingSituationField(col)) {
                 finalData = { ...finalData, ...await detectLivingSituationField(col) };
             }
             else if (className.includes("vitals__unable")) {
-                const options = []
+                const options = [];
                 const input = await col.$('input[type="checkbox"]');
                 const labelEl = await col.$('label');
+
+                if (!input || !labelEl) continue;
+
                 const value = await input.evaluate(el => el.id || el.value || null);
                 const label = await labelEl.evaluate(el => el.textContent.trim());
-                const id= ++optionsId 
-                options.push({ id,value, label, });
-                if (!input || !labelEl) continue;
-                finalData = { type: 'checkbox', options }
+                const OptionId = ++optionsId;
+
+                // ✅ Generate XPath for the checkbox input
+                const xpath = await getElementXPath(input);
+
+                options.push({ id: optionsId, value, label, xpath });
+                finalData = { id, type: 'checkbox', options, };
             }
             else if (await col.$('.vitals__input-wrapper select')) {
                 const selectElem = await col.$('.vitals__input-wrapper select');
@@ -175,21 +182,39 @@ export default async function extractQuestions(page) {
                 finalData.options = [];
 
                 if (selectElem) {
+                    // ✅ Generate XPath for the select element
+                    finalData.xpath = await getElementXPath(selectElem);
+
                     const optionHandles = await selectElem.$$('option');
                     for (const option of optionHandles) {
                         const textProp = await option.getProperty('textContent');
                         const text = (await textProp.jsonValue()).trim();
-                        if (text !== '') finalData.options.push({
-                            id:optionsId++,
-                            text
-                        }
-                        );
+                        if (!text) continue;
+
+                        // ✅ Generate XPath for each option
+                        const xpath = await getElementXPath(option);
+
+                        finalData.options.push({
+                            id: optionsId++,
+                            text,
+                            xpath
+                        });
                     }
-                    finalData.options = [...new Set(finalData.options)];
+
+                    // Remove duplicate options by text
+                    finalData.options = Array.from(
+                        new Map(finalData.options.map(o => [o.text, o])).values()
+                    );
                 }
-            } else if (await col.$('.select-v2:not(.disabled)')) {
+            }
+            else if (await col.$('.select-v2:not(.disabled)')) {
                 finalData.type = 'select';
                 finalData.options = [];
+
+                // ✅ Generate XPath for the column itself
+                finalData.xpath = await getElementXPath(col);
+
+                // Fetch options for the select element
                 finalData = await fetchSelectOptions(page, col, finalData);
             }
             if (
@@ -210,7 +235,7 @@ export default async function extractQuestions(page) {
                 other.placeholder === q.placeholder
             )
         );
-         const meragedData = mergeExtraTextareas(sectionData)
+        const meragedData = mergeExtraTextareas(sectionData)
 
         results.push(meragedData);
     }

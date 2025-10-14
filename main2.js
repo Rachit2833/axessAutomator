@@ -6,6 +6,10 @@ import { detectDashboardVersion } from './utils/dashboard_detect.js';
 import { getCurrentURL, getSidebarItems, saveToJSON, selectDateRangeDropdown } from "./utils/necessary.js"
 import { navigateSidebarPrefetched } from './utils/navigate_sidebar.js';
 import extractQuestions, { optionsId } from './extract_question.js';
+import chunkQuestion from './chunkQuestion.js';
+import mapResponse from "./utils/mapResponse.js"
+import performActions from './utils/permormAction.js';
+import getResponse from "./fetchAnswer.js"
 const COOKIES_PATH = path.resolve('./cookies.json');
 const Browser_ID = '82456391-e868-4426-8f93-466f5b5c1805'
 
@@ -15,7 +19,7 @@ const Browser_ID = '82456391-e868-4426-8f93-466f5b5c1805'
 async function runPuppeteer() {
     try {
         const browser = await puppeteer.launch({
-            headless: true,          // 👈 set true for headless mode
+            headless: false,          // 👈 set true for headless mode
         });
 
         const page = await browser.newPage();
@@ -175,7 +179,16 @@ async function processPage(page) {
     console.log(radioBox);
     console.log("writitng");
     await saveToJSON(radioBox)
-    console.log("written");
+    const questionChunk = chunkQuestion(radioBox)
+    console.log(questionChunk);
+    const response = await getResponse(questionChunk)
+    await saveToJSON(response,"response.js")
+    const searchedQuestion = mapResponse(radioBox,response)
+    await saveToJSON(searchedQuestion,"action.js")
+    console.log("waiting for action filling to start");
+    await new Promise(resolve=>setTimeout(resolve, 10000))
+    console.log("startied filling");
+    await performActions(page,searchedQuestion)
 }
 
 
