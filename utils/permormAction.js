@@ -2,8 +2,8 @@ import puppeteer from "puppeteer";
 
 export default async function performActions(page, actions) {
   for (const { qn_id, action } of actions) {
-    console.log(`🧩 Executing QN_ID: ${qn_id} | Type: ${action.type}`);
-
+    console.log(`🧩 Executing QN_ID: ${qn_id} | Type: ${action}`);
+      if(!action) continue
     try {
       if (action.type === "click") {
         for (const opt of action.options || []) {
@@ -34,7 +34,8 @@ export default async function performActions(page, actions) {
 
         try {
           // Try to detect if it's a native <select>
-          const [nativeSelect] = await page.$x(`xpath/${action.xpath}`);
+          const nativeSelect = await page.waitForSelector(`xpath/${action.xpath}`, { visible: true, timeout: 15000 });
+          console.log(nativeSelect);
 
           if (nativeSelect) {
             const tagName = await page.evaluate(el => el.tagName.toLowerCase(), nativeSelect);
@@ -42,14 +43,44 @@ export default async function performActions(page, actions) {
             if (tagName === 'select') {
               // ----- NATIVE SELECT -----
               const optionValues = (action.options || []).map(opt => opt.value || opt.label);
+
               for (const val of optionValues) {
-                console.log(`🧩 Selecting value "${val}" from native <select>`);
-                await nativeSelect.select(val);
-                await page.evaluate(el => el.dispatchEvent(new Event('change', { bubbles: true })), nativeSelect);
+                console.log(`🧩 Selecting option "${val}" in <select> using DOM evaluation`);
+
+                await page.evaluate(
+                  (xpath, val) => {
+                    const select = document.evaluate(
+                      xpath,
+                      document,
+                      null,
+                      XPathResult.FIRST_ORDERED_NODE_TYPE,
+                      null
+                    ).singleNodeValue;
+
+                    if (select) {
+                      const option = Array.from(select.options).find(
+                        opt => opt.text.trim() === val || opt.value === val
+                      );
+                      if (option) {
+                        select.value = option.value;
+                        select.dispatchEvent(new Event('change', { bubbles: true }));
+                      } else {
+                        console.warn(`⚠️ Option "${val}" not found for select`, select);
+                      }
+                    } else {
+                      console.warn(`⚠️ Select not found for XPath: ${xpath}`);
+                    }
+                  },
+                  action.xpath, // 👈 pass XPath of the <select>
+                  val
+                );
+
+                // Wait a bit to let DOM/UI update
                 await page.waitForNetworkIdle({ idleTime: 500, timeout: 10000 }).catch(() => { });
                 await new Promise(res => setTimeout(res, 800));
               }
-            } else {
+            }
+            else {
               // ----- CUSTOM SELECT-V2 -----
               console.log("🧠 Detected custom select-v2 component");
 

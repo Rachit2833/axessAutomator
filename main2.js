@@ -12,6 +12,7 @@ import performActions from './utils/permormAction.js';
 import getResponse from "./fetchAnswer.js"
 const COOKIES_PATH = path.resolve('./cookies.json');
 const Browser_ID = '82456391-e868-4426-8f93-466f5b5c1805'
+import { extractNestedCheckboxes } from './elementsDetectors/nested_detector.js';
 
 
 
@@ -86,7 +87,7 @@ async function runPuppeteer() {
                 break;
             }
         }
-         await new Promise(resolve=>setTimeout(resolve,5000))
+        await new Promise(resolve => setTimeout(resolve, 5000))
         // ---- Step 4: Search Patient ----
         const searchInput = await page.waitForSelector(
             'input[placeholder="Search Patients"]',
@@ -101,7 +102,7 @@ async function runPuppeteer() {
         await page.evaluate(el => el.value = "", searchInput);
         const clearedValue = await page.evaluate(el => el.value, searchInput);
         console.log("🧹 Cleared search input, current value:", clearedValue);
-        
+
         await searchInput.type("A7-PAT1234", { delay: 100 });
         const typedValue = await page.evaluate(el => el.value, searchInput);
         console.log("✅ Typed into search input, current value:", typedValue);
@@ -138,7 +139,7 @@ async function runPuppeteer() {
         );
         let allData = {};
         const sidebarItems = await getSidebarItems(page);
-        for (let i = 1; i < sidebarItems.length; i++) {
+        for (let i = 0; i < sidebarItems.length; i++) {
             const section = sidebarItems[i];
             const sectionName = section.text || section; // depends on how getSidebarItems is returning
 
@@ -146,10 +147,11 @@ async function runPuppeteer() {
 
             // Navigate
             await navigateSidebarPrefetched(sidebarItems, 'goTo', sectionName);
+
             await new Promise(resolve => setTimeout(resolve, 3000)); // wait for UI
 
             // Scrape select elements/questions
-            const sectionData = await processPage(page);
+            const sectionData = await processPage(page, i);
 
             // Save under section name
             allData[sectionName] = sectionData;
@@ -174,11 +176,11 @@ runPuppeteer();
 
 
 
-async function processPage(page) {
-    const radioBox = await extractQuestions(page)
+async function processPage(page, i) {
+    const radioBox = await extractQuestions(page, i)
     console.log(radioBox);
     console.log("writitng");
-    await saveToJSON(radioBox)
+    await saveToJSON(radioBox, `question${i}.js`)
     const questionChunk = chunkQuestion(radioBox)
     console.log(questionChunk);
     const response = await getResponse(questionChunk)
@@ -186,161 +188,14 @@ async function processPage(page) {
     const searchedQuestion = mapResponse(radioBox,response)
     await saveToJSON(searchedQuestion,"action.js")
     console.log("waiting for action filling to start");
-    await new Promise(resolve=>setTimeout(resolve, 10000))
+    await new Promise(resolve=>setTimeout(resolve, 2000))
     console.log("startied filling");
     await performActions(page,searchedQuestion)
+     console.log("checking nested");
+    const nestedCheckboxes = await extractNestedCheckboxes(page, i);
+    await saveToJSON(nestedCheckboxes, `nestedQuestions${i}.json`);
+    console.log("Nested checkboxes extracted:", nestedCheckboxes);
+    
 }
-
-
-// async function extractQuestions(page) {
-//     const results = [];
-
-//     // Get all sections
-//     const sections = await page.$$('section.oasis__subsection-container');
-
-//     for (let section of sections) {
-//         const html = await section.evaluate(el => {
-//             const clone = el.cloneNode(false); // shallow clone, no children
-//             return clone.outerHTML;
-//         });
-
-//         const sectionData = await page.evaluate(el => {
-//             return {
-//                 heading: el.querySelector('.oasis__subsection-title')?.textContent.trim() || 'Untitled Section',
-//             };
-//         }, section);
-
-//         sectionData.questions = [];
-
-//         const questionColumns = await section.$$(fieldSelectors.join(', '));
-
-//         for (let col of questionColumns) {
-
-//             const html = await col.evaluate(el => {
-//                 const clone = el.cloneNode(false); // shallow clone, no children
-//                 return clone.outerHTML;
-//             });
-
-//             const data = await page.evaluate(el => {
-//                 const result = { type: null, code: null, question: null };
-
-//                 // --- Common info ---
-//                 const question =
-//                     el.querySelector('.datepicker__label, .timepicker__label, .ACTextinput__label, .select-v2__header')
-//                         ?.textContent?.trim()
-//                     || el.querySelector(".oasis__checkgroup-container")?.querySelector(".ac-moo-label-title span")?.textContent?.trim()
-//                     || null;
-
-//                 if (!question) return null;
-
-//                 result.question = question;
-//                 result.code = el.querySelector('.ac-moo-label-code')?.textContent?.trim() || null;
-
-//                 // --- Detect type ---
-//                 const radios = el.querySelectorAll('.radio-container .ac-radio input[type="radio"]');
-//                 if (radios.length) {
-//                     const options = Array.from(el.querySelectorAll('.radio-container .ac-radio label'))
-//                         .map(label => {
-//                             const input = label.querySelector('input[type="radio"]');
-//                             if (!input || input.disabled) return null;
-//                             return {
-//                                 value: input.value || null,
-//                                 label: label.textContent.trim()
-//                             };
-//                         })
-//                         .filter(Boolean);
-
-//                     return { ...result, type: 'radio', options };
-//                 }
-
-//                 const select = el.querySelector('.select-v2:not(.disabled)');
-//                 if (select) {
-//                     return { ...result, type: 'select', options: [] };
-//                 }
-
-//                 const input = el.querySelector('input[type="text"], input[type="number"], input[type="date"], input.time-picker');
-//                 if (input) {
-//                     const type = input.getAttribute('type') || 'text';
-//                     const placeholder = input.getAttribute('placeholder') || '';
-//                     return {
-//                         ...result,
-//                         type: ['number', 'date'].includes(type) ? type : 'text',
-//                         placeholder
-//                     };
-//                 }
-
-//                 // --- Detect checkboxes ---
-//                 const checkboxes = el.querySelectorAll('.checkbox__main');
-//                 if (checkboxes.length) {
-//                     // Return minimal info to Node; logging happens in Node context
-//                     return {
-//                         ...result, type: 'checkbox', options: Array.from(checkboxes).map(box => {
-//                             const input = box.querySelector('input[type="checkbox"]');
-//                             const label = box.querySelector('label');
-//                             if (!input || !label) return null;
-//                             return {
-//                                 value: input.id || input.value || null,
-//                                 label: label.textContent.trim(),
-//                                 disabled: input.disabled || false
-//                             };
-//                         }).filter(Boolean)
-//                     };
-//                 }
-
-//                 return null;
-//             }, col);
-
-//             // Log checkboxes in Node
-//             if (data?.type === 'checkbox') {
-//                 console.log(data.options.length, 'checkbox detected for question:', data.question);
-//             }
-
-//             if (data) {
-//                 // --- Fetch select options if select ---
-//                 if (data.type === 'select') {
-//                     try {
-//                         const selectHandle = await col.$('.select-v2:not(.disabled)');
-//                         if (selectHandle) {
-//                             await selectHandle.click();
-//                             await new Promise(resolve => setTimeout(resolve, 500));
-
-//                             const options = await page.evaluate(sel => {
-//                                 const dropdown = sel.querySelector('.select-v2__dropdown') || sel.parentElement.querySelector('.select-v2__dropdown');
-//                                 if (!dropdown) return [];
-//                                 return Array.from(dropdown.querySelectorAll('li'))
-//                                     .map(li => li.textContent.trim())
-//                                     .filter(Boolean);
-//                             }, selectHandle);
-
-//                             data.options = options;
-//                             await page.keyboard.press('Escape');
-//                             await new Promise(resolve => setTimeout(resolve, 300));
-//                         }
-//                     } catch (err) {
-//                         console.log(`No options found for select: "${data.question}"`);
-//                     }
-//                 }
-
-//                 sectionData.questions.push(data);
-//             }
-//         }
-
-//         // Deduplicate questions
-//         sectionData.questions = sectionData.questions.filter((q, index, self) => {
-//             return index === self.findIndex(other =>
-//                 other.type === q.type &&
-//                 other.question === q.question &&
-//                 other.placeholder === q.placeholder
-//             );
-//         });
-
-//         results.push(sectionData);
-//     }
-
-//     await new Promise(resolve => setTimeout(resolve, 4000));
-
-//     return results;
-// }
-
 
 

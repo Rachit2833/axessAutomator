@@ -8,6 +8,13 @@ export default async function detectCheckboxField(el) {
   const options = [];
 
   for (let box of checkboxEls) {
+    // ✅ Skip checkboxes that are inside nested containers
+    const isNested = await box.evaluate(element => {
+      return element.closest('.checkbox__nested') !== null;
+    });
+    
+    if (isNested) continue;
+
     const id = increaseOptionId();
     const input = await box.$('input[type="checkbox"]');
     const labelEl = await box.$('label');
@@ -21,6 +28,9 @@ export default async function detectCheckboxField(el) {
 
     options.push({ id, label, xpath });
   }
+
+  // Return null if no valid options found
+  if (options.length === 0) return null;
 
   return { type: 'checkbox', options };
 }

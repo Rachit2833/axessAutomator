@@ -4,8 +4,9 @@ export default function chunkQuestion(data) {
   let questionChunk = [];
   let num = 0;       // counts normal-sized questions
   let largeElem = 0; // flag for one large element per chunk
-
+  console.log(data,"data chuckquestion");
   data.forEach(section => {
+    section = Array.isArray(section) ? section : [section];
     section.forEach(sectionQuestion => {
       sectionQuestion.questions.forEach(question => {
         const optionsLength = question.options?.length || 0;
