@@ -2,8 +2,8 @@ import puppeteer from "puppeteer";
 
 export default async function performActions(page, actions) {
   for (const { qn_id, action } of actions) {
-    console.log(`🧩 Executing QN_ID: ${qn_id} | Type: ${action}`);
-      if(!action) continue
+    console.log(`🧩 Executing QN_ID: ${qn_id} | Type: ${action.type}`);
+
     try {
       if (action.type === "click") {
         for (const opt of action.options || []) {

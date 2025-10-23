@@ -10,8 +10,8 @@ import getElementXPath from './utils/generateXpath.js';
 
 export let optionsId = 2000;
 let questionId = 3000;
-export function increaseQuestionId(){
-        questionId++;
+export function increaseQuestionId() {
+    questionId++;
     return questionId;
 }
 export function increaseOptionId() {
@@ -117,6 +117,7 @@ export default async function extractQuestions(page, i) {
 
                 if (options.length) {
                     sectionData.questions.push({
+                        id: increaseQuestionId(),
                         type: 'checkbox-group',
                         question: groupTitle,
                         options
@@ -124,7 +125,7 @@ export default async function extractQuestions(page, i) {
                 }
             }
 
-          results.push([sectionData])
+            results.push([sectionData])
             continue; // skip normal column processing
         }
 
@@ -185,6 +186,7 @@ export default async function extractQuestions(page, i) {
 
                 if (options.length) {
                     sectionData.questions.push({
+                        id: increaseQuestionId(),
                         type: 'radio-group',
                         question,
                         options
@@ -198,7 +200,7 @@ export default async function extractQuestions(page, i) {
         // --- Normal questionColumns processing for other sections ---
         let questionColumns = await section.$$(fieldSelectors.join(', '));
 
-        if (i === 0 || i===6) {
+        if (i === 0 || i === 6) {
             questionColumns = await Promise.all(
                 questionColumns.map(async (el) => {
                     const hasNested = await el.$('.question-column');
@@ -274,19 +276,49 @@ export default async function extractQuestions(page, i) {
             }
 
             let finalData = { ...result };
+            const checkboxData = await detectCheckboxField(col);
+            if (checkboxData) {
+                finalData = { ...finalData, ...checkboxData };
+            } else if (checkboxData === null && await col.$('.checkbox__main, .checkbox-container .notacheck')) {
+                // Checkbox field exists but returned null (already answered), skip this question
+                console.log('⏭️ Skipping answered checkbox question:', question);
+                continue;
+            }
+            const radioData = await detectRadioField(col);
+            if (radioData) {
+                finalData = { ...finalData, ...radioData };
+            } else if (radioData === null && await col.$('.radio-container .ac-radio input[type="radio"]')) {
+                // Radio field exists but returned null (already answered), skip this question
+                console.log('⏭️ Skipping answered radio question:', question);
+                continue;
+            } const inputData = await detectInputField(col);
+            if (inputData) {
+                finalData = { ...finalData, ...inputData };
+            } else if (inputData === null && await col.$('input[type="text"], input[type="number"], input[type="date"], input.time-picker')) {
+                // Input field exists but returned null (already filled/disabled), skip this question
+                console.log('⏭️ Skipping answered/disabled input question:', question);
+                continue;
+            } const textareaData = await detectTextArea(col);
+            if (textareaData) {
+                finalData = { ...finalData, ...textareaData };
+            } else if (textareaData === null && await col.$('.ACTextarea textarea')) {
+                // Textarea exists but returned null (already has value or is disabled), skip this question
+                console.log('⏭️ Skipping answered/disabled textarea question:', question);
+                continue;
+            }
+            const livingData = await detectLivingSituationField(col);
+            console.log(livingData, "libing");
+            if (livingData != null) {
+                console.log(1);
+                finalData = { ...finalData, ...livingData };
+            } else if (livingData === null) {
+                console.log(2);
+                console.log('⏭️ Skipping living situation question', question);
+                continue;
 
-            // Detect field types
-            if (await detectCheckboxField(col)) {
-                finalData = { ...finalData, ...await detectCheckboxField(col) };
-            } else if (await detectRadioField(col)) {
-                finalData = { ...finalData, ...await detectRadioField(col) };
-            } else if (await detectInputField(col)) {
-                finalData = { ...finalData, ...await detectInputField(col) };
-            } else if (await detectTextArea(col)) {
-                finalData = { ...finalData, ...await detectTextArea(col) };
-            } else if (await detectLivingSituationField(col)) {
-                finalData = { ...finalData, ...await detectLivingSituationField(col) };
-            } else if (className.includes("vitals__unable")) {
+            }
+
+            else if (className.includes("vitals__unable")) {
                 const options = [];
                 const input = await col.$('input[type="checkbox"]');
                 const labelEl = await col.$('label');

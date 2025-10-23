@@ -30,7 +30,7 @@ function transformQuestionToAction(question, res) {
   if (!question) return null;
 
   // Checkbox
-  if (question.type === 'checkbox') {
+  if (question.type === 'checkbox'||question.type === 'checkbox-group'||question.type === 'radio'||question.type === 'radio-group') {
     return {
       type: 'click',
       options: question.options

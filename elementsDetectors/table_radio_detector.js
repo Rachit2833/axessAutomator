@@ -1,7 +1,7 @@
 import { increaseOptionId } from "../extract_question.js";
-import getXPathFromHandle  from "../utils/generateXpath.js";   // ✅ import xpath helper
+import getXPathFromHandle from "../utils/generateXpath.js";   // ✅ import xpath helper
 
-export default async function detectLivingSituationField(el) {
+export default async function detectLivingSituationField(el, answeredDetect = false) {
   // Find the living situation table (M1100 style)
   const table = await el.$(".ac-living-situation");
   if (!table) return null;
@@ -19,6 +19,7 @@ export default async function detectLivingSituationField(el) {
 
   // Extract header labels (availability)
   const headerEls = await table.$$("thead tr:last-child th");
+  headerEls.shift()
   const headers = [];
   for (let h of headerEls) {
     const text = await h.evaluate((el) => el.textContent.trim());
@@ -36,6 +37,18 @@ export default async function detectLivingSituationField(el) {
       : "";
 
     const radios = await row.$$("input[type='radio']");
+    if(!answeredDetect){
+      for (let i = 0; i < radios.length; i++) {
+      const radio = radios[i];
+      const isActive = await radio.evaluate(el => {
+        const parentDiv = el.closest('div');
+        return parentDiv && parentDiv.classList.contains('active');
+      });
+      if(isActive){
+         return;
+      }
+    }
+    }
     for (let i = 0; i < radios.length; i++) {
       const radio = radios[i];
       const id = increaseOptionId();
