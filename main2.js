@@ -139,7 +139,7 @@ async function runPuppeteer() {
         );
         let allData = {};
         const sidebarItems = await getSidebarItems(page);
-        for (let i = 1; i < 2; i++) {
+        for (let i = 13; i < 14; i++) {
             const section = sidebarItems[i];
             const sectionName = section.text || section; // depends on how getSidebarItems is returning
 
@@ -194,8 +194,16 @@ async function processPage(page, i) {
     console.log("checking nested");
     const nestedCheckboxes = await extractNestedCheckboxes(page, i);
     await saveToJSON(nestedCheckboxes, `nestedQuestions${i}.json`);
-    console.log("Nested checkboxes extracted:", nestedCheckboxes);
-
+    const nestedQuestionChunk = chunkQuestion(nestedCheckboxes)
+    console.log(nestedQuestionChunk);
+    const responseNested = await getResponse(nestedQuestionChunk)
+    await saveToJSON(responseNested,"response.js")
+    const searchedNestedQuestion = mapResponse(radioBox,response)
+    console.log("waiting for  nested action filling to start");
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    console.log("startied filling");
+    await performActions(page, searchedQuestion)
+    console.log("checking nested");
 }
 
 

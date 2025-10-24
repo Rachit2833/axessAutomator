@@ -276,49 +276,82 @@ export default async function extractQuestions(page, i) {
             }
 
             let finalData = { ...result };
+            // Try to detect field type (in priority order)
+            let fieldDetected = false;
+
+            // 1. Check checkbox
             const checkboxData = await detectCheckboxField(col);
             if (checkboxData) {
                 finalData = { ...finalData, ...checkboxData };
+                fieldDetected = true;
             } else if (checkboxData === null && await col.$('.checkbox__main, .checkbox-container .notacheck')) {
-                // Checkbox field exists but returned null (already answered), skip this question
                 console.log('⏭️ Skipping answered checkbox question:', question);
                 continue;
             }
-            const radioData = await detectRadioField(col);
-            if (radioData) {
-                finalData = { ...finalData, ...radioData };
-            } else if (radioData === null && await col.$('.radio-container .ac-radio input[type="radio"]')) {
-                // Radio field exists but returned null (already answered), skip this question
-                console.log('⏭️ Skipping answered radio question:', question);
-                continue;
-            } const inputData = await detectInputField(col);
-            if (inputData) {
-                finalData = { ...finalData, ...inputData };
-            } else if (inputData === null && await col.$('input[type="text"], input[type="number"], input[type="date"], input.time-picker')) {
-                // Input field exists but returned null (already filled/disabled), skip this question
-                console.log('⏭️ Skipping answered/disabled input question:', question);
-                continue;
-            } const textareaData = await detectTextArea(col);
-            if (textareaData) {
-                finalData = { ...finalData, ...textareaData };
-            } else if (textareaData === null && await col.$('.ACTextarea textarea')) {
-                // Textarea exists but returned null (already has value or is disabled), skip this question
-                console.log('⏭️ Skipping answered/disabled textarea question:', question);
-                continue;
-            }
-            const livingData = await detectLivingSituationField(col);
-            console.log(livingData, "libing");
-            if (livingData != null) {
-                console.log(1);
-                finalData = { ...finalData, ...livingData };
-            } else if (livingData === null) {
-                console.log(2);
-                console.log('⏭️ Skipping living situation question', question);
-                continue;
 
+            // 2. Check radio (only if checkbox wasn't found)
+            if (!fieldDetected) {
+                const radioData = await detectRadioField(col);
+                console.log("Radio data:", radioData);
+                if (radioData) {
+                    finalData = { ...finalData, ...radioData };
+                    fieldDetected = true;
+                } else if (radioData === null && await col.$('.radio-container .ac-radio input[type="radio"]')) {
+                    console.log('⏭️ Skipping answered radio question:', question);
+                    continue;
+                }
             }
 
-            else if (className.includes("vitals__unable")) {
+            // 3. Check input (only if no field found yet)
+            if (!fieldDetected) {
+                const inputData = await detectInputField(col);
+                if (inputData) {
+                    finalData = { ...finalData, ...inputData };
+                    fieldDetected = true;
+                } else if (inputData === null && await col.$('input[type="text"], input[type="number"], input[type="date"], input.time-picker')) {
+                    console.log('⏭️ Skipping answered/disabled input question:', question);
+                    continue;
+                }
+            }
+
+            if (await col.$('.select-v2:not(.disabled)') && !fieldDetected) {
+                finalData.type = 'select';
+                finalData.options = [];
+                finalData.xpath = await getElementXPath(col);
+                finalData = await fetchSelectOptions(page, col, finalData);
+                fieldDetected = true;
+                
+            }
+
+            // 4. Check textarea (only if no field found yet)
+            if (!fieldDetected) {
+                const textareaData = await detectTextArea(col);
+                if (textareaData) {
+                    finalData = { ...finalData, ...textareaData };
+                    fieldDetected = true;
+                } else if (textareaData === null && await col.$('.ACTextarea textarea')) {
+                    console.log('⏭️ Skipping answered/disabled textarea question:', question);
+                    continue;
+                }
+            }
+
+            // 5. Check living situation (only if no field found yet)
+            if (!fieldDetected) {
+                const livingData = await detectLivingSituationField(col);
+                console.log(livingData, "living");
+                if (livingData != null) {
+                    console.log('✅ Living situation field detected');
+                    finalData = { ...finalData, ...livingData };
+                    fieldDetected = true;
+                } else if (livingData === null) {
+                    console.log('⏭️ Skipping living situation question', question);
+                    continue;
+                }
+            }
+
+
+
+            if (className.includes("vitals__unable") && !fieldDetected) {
                 const options = [];
                 const input = await col.$('input[type="checkbox"]');
                 const labelEl = await col.$('label');
@@ -328,7 +361,9 @@ export default async function extractQuestions(page, i) {
                 const xpath = await getElementXPath(input);
                 options.push({ id: increaseOptionId(), value, label, xpath });
                 finalData = { id, type: 'checkbox', options };
-            } else if (await col.$('.vitals__input-wrapper select')) {
+                fieldDetected = true;
+            }
+            if (await col.$('.vitals__input-wrapper select') && !fieldDetected) {
                 const selectElem = await col.$('.vitals__input-wrapper select');
                 finalData.type = 'select';
                 finalData.options = [];
@@ -346,12 +381,7 @@ export default async function extractQuestions(page, i) {
                         new Map(finalData.options.map(o => [o.text, o])).values()
                     );
                 }
-            } else if (await col.$('.select-v2:not(.disabled)')) {
-
-                finalData.type = 'select';
-                finalData.options = [];
-                finalData.xpath = await getElementXPath(col);
-                finalData = await fetchSelectOptions(page, col, finalData);
+                fieldDetected = true;
             }
 
             sectionData.questions.push(finalData);

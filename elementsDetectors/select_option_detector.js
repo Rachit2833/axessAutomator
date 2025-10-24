@@ -1,3 +1,4 @@
+import { increaseOptionId } from '../extract_question.js';
 import getElementXPath from '../utils/generateXpath.js';
 
 export default async function fetchSelectOptions(page, col, data) {
@@ -28,7 +29,7 @@ export default async function fetchSelectOptions(page, col, data) {
 
             const xpath = await getElementXPath(li); // ✅ XPath per option
          
-            options.push({ text, xpath });
+            options.push({id:increaseOptionId(), text, xpath });
         }
 
         data.options = options;
@@ -37,7 +38,8 @@ export default async function fetchSelectOptions(page, col, data) {
         data.xpath = await getElementXPath(selectHandle);
 
         await page.keyboard.press('Escape');
-        await page.waitForTimeout(300);
+        await selectHandle.click()
+        await new Promise(resolve=>setTimeout(resolve,2000))
     } catch (err) {
         console.log(`No options found for select: "${data.question}"`);
     }

@@ -2,6 +2,7 @@ import { increaseOptionId } from "../extract_question.js";
 import getXPathFromHandle from "../utils/generateXpath.js";   // ✅ import xpath helper
 
 export default async function detectLivingSituationField(el, answeredDetect = false) {
+  console.log("hello world table");
   // Find the living situation table (M1100 style)
   const table = await el.$(".ac-living-situation");
   if (!table) return null;

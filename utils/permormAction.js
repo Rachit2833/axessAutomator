@@ -3,16 +3,50 @@ import puppeteer from "puppeteer";
 export default async function performActions(page, actions) {
   for (const { qn_id, action } of actions) {
     console.log(`🧩 Executing QN_ID: ${qn_id} | Type: ${action.type}`);
-
+      if(!action) continue
     try {
       if (action.type === "click") {
         for (const opt of action.options || []) {
-          const el = await page.waitForSelector(`xpath/${opt.xpath}`, { visible: true, timeout: 15000 });
-          if (el) {
-            await el.click();
-            console.log(`✅ Clicked on: ${opt.xpath}`);
-          } else {
-            console.warn(`⚠️ Element not found for click: ${opt.xpath}`);
+          try {
+            // Try to find and click using evaluate
+            const result = await page.evaluate((xpath) => {
+              const xpathResult = document.evaluate(
+                xpath,
+                document,
+                null,
+                XPathResult.FIRST_ORDERED_NODE_TYPE,
+                null
+              );
+              const element = xpathResult.singleNodeValue;
+
+              if (element) {
+                // Scroll into view
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // Click the element
+                element.click();
+
+                // Return element info
+                return {
+                  clicked: true,
+                  html: element.outerHTML,
+                  tagName: element.tagName,
+                  text: element.textContent?.trim().substring(0, 100) // First 100 chars
+                };
+              }
+              return { clicked: false };
+            }, opt.xpath);
+
+            if (result.clicked) {
+              console.log(`✅ Clicked on: ${opt.xpath}`);
+              console.log(`   Tag: ${result.tagName}`);
+              console.log(`   Text: ${result.text}`);
+              console.log(`   HTML: ${result.html}`);
+            } else {
+              console.warn(`⚠️ Element not found for click: ${opt.xpath}`);
+            }
+          } catch (error) {
+            console.error(`❌ Error clicking ${opt.xpath}:`, error.message);
           }
         }
       }
