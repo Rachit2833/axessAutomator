@@ -1,7 +1,7 @@
 
 
-const email = "pranavmanpuria@gmail.com"
-const password1 = "ziCtec-gubfoj-damdi5"
+const email = ""
+const password1 = ""
 
 export async function loginAxxess(page) {
     try {
