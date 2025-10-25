@@ -8,7 +8,7 @@ export default function chunkQuestion(data) {
   data.forEach(section => {
     section = Array.isArray(section) ? section : [section];
     section.forEach(sectionQuestion => {
-      sectionQuestion.questions.forEach(question => {
+      sectionQuestion.questions?.forEach(question => {
         const optionsLength = question.options?.length || 0;
 
         if (question.type === 'select' || question.type === 'checkbox') {

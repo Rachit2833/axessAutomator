@@ -2,64 +2,74 @@ import puppeteer from "puppeteer";
 
 export default async function performActions(page, actions) {
   for (const { qn_id, action } of actions) {
-    console.log(`🧩 Executing QN_ID: ${qn_id} | Type: ${action.type}`);
-      if(!action) continue
+    console.log(`🧩 Executing QN_ID: ${qn_id} | Type: ${action?.type}`);
+    if (!action) continue
     try {
       if (action.type === "click") {
         for (const opt of action.options || []) {
           try {
-            // Try to find and click using evaluate
-            const result = await page.evaluate((xpath) => {
-              const xpathResult = document.evaluate(
-                xpath,
-                document,
-                null,
-                XPathResult.FIRST_ORDERED_NODE_TYPE,
-                null
-              );
-              const element = xpathResult.singleNodeValue;
-
-              if (element) {
-                // Scroll into view
-                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-                // Click the element
-                element.click();
-
-                // Return element info
-                return {
-                  clicked: true,
-                  html: element.outerHTML,
-                  tagName: element.tagName,
-                  text: element.textContent?.trim().substring(0, 100) // First 100 chars
-                };
+            // Check if checkbox/radio is already checked
+            const isAlreadyChecked = await page.evaluate((xpath) => {
+              const el = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+              if (el) {
+                // Check for radio/checkbox
+                if (el.type === 'radio' || el.type === 'checkbox') {
+                  return el.checked;
+                }
+                // Check for custom radio/checkbox classes
+                if (el.classList.contains('checked') || el.classList.contains('active') || el.classList.contains('selected')) {
+                  return true;
+                }
               }
-              return { clicked: false };
+              return false;
             }, opt.xpath);
 
-            if (result.clicked) {
-              console.log(`✅ Clicked on: ${opt.xpath}`);
-              console.log(`   Tag: ${result.tagName}`);
-              console.log(`   Text: ${result.text}`);
-              console.log(`   HTML: ${result.html}`);
-            } else {
-              console.warn(`⚠️ Element not found for click: ${opt.xpath}`);
+            if (isAlreadyChecked) {
+              console.log(`⏭️ Skipping (already checked): ${opt.xpath}`);
+              continue;
             }
+
+            await page.evaluate((xpath) => {
+              const el = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+              if (el) el.click();
+            }, opt.xpath);
+            console.log(`✅ Clicked: ${opt.xpath}`);
+            await new Promise(res => setTimeout(res, 800));
           } catch (error) {
-            console.error(`❌ Error clicking ${opt.xpath}:`, error.message);
+            console.error(`❌ Error:`, error.message);
           }
         }
       }
 
       else if (action.type === "type") {
-        const el = await page.waitForSelector(`xpath/${action.xpath}`, { visible: true, timeout: 15000 });
-        if (el) {
-          await el.click({ clickCount: 3 });
-          await page.keyboard.press("Backspace");
-          await el.type(String(action.value), { delay: 50 });
-          console.log(`✅ Typed "${action.value}" into: ${action.xpath}`);
-        } else {
-          console.warn(`⚠️ Input not found for typing: ${action.xpath}`);
+        try {
+          const el = await page.waitForSelector(`xpath/${action.xpath}`, { timeout: 15000 });
+          if (el) {
+            // Check if input already has the value
+            const currentValue = await page.evaluate((xpath) => {
+              const input = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+              if (input) {
+                return input.value || input.textContent || '';
+              }
+              return '';
+            }, action.xpath);
+
+            const targetValue = String(action.value);
+
+            if (currentValue.trim() === targetValue.trim()) {
+              console.log(`⏭️ Skipping (already has value "${targetValue}"): ${action.xpath}`);
+              continue;
+            }
+
+            await el.click({ clickCount: 3 });
+            await page.keyboard.press("Backspace");
+            await el.type(targetValue, { delay: 50 });
+            console.log(`✅ Typed "${targetValue}" into: ${action.xpath}`);
+          } else {
+            console.warn(`⚠️ Input not found for typing: ${action.xpath}`);
+          }
+        } catch (error) {
+          console.error(`❌ Error typing:`, error.message);
         }
       }
 
@@ -67,8 +77,7 @@ export default async function performActions(page, actions) {
         console.log(`🎯 Handling dropdown for QN_ID: ${qn_id}`);
 
         try {
-          // Try to detect if it's a native <select>
-          const nativeSelect = await page.waitForSelector(`xpath/${action.xpath}`, { visible: true, timeout: 15000 });
+          const nativeSelect = await page.waitForSelector(`xpath/${action.xpath}`, { timeout: 15000 });
           console.log(nativeSelect);
 
           if (nativeSelect) {
@@ -79,6 +88,21 @@ export default async function performActions(page, actions) {
               const optionValues = (action.options || []).map(opt => opt.value || opt.label);
 
               for (const val of optionValues) {
+                // Check if option is already selected
+                const isAlreadySelected = await page.evaluate((xpath, targetVal) => {
+                  const select = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                  if (select) {
+                    return select.value === targetVal || 
+                           Array.from(select.options).find(opt => opt.selected && (opt.text.trim() === targetVal || opt.value === targetVal));
+                  }
+                  return false;
+                }, action.xpath, val);
+
+                if (isAlreadySelected) {
+                  console.log(`⏭️ Skipping (already selected "${val}"): ${action.xpath}`);
+                  continue;
+                }
+
                 console.log(`🧩 Selecting option "${val}" in <select> using DOM evaluation`);
 
                 await page.evaluate(
@@ -105,11 +129,10 @@ export default async function performActions(page, actions) {
                       console.warn(`⚠️ Select not found for XPath: ${xpath}`);
                     }
                   },
-                  action.xpath, // 👈 pass XPath of the <select>
+                  action.xpath,
                   val
                 );
 
-                // Wait a bit to let DOM/UI update
                 await page.waitForNetworkIdle({ idleTime: 500, timeout: 10000 }).catch(() => { });
                 await new Promise(res => setTimeout(res, 800));
               }
@@ -118,27 +141,39 @@ export default async function performActions(page, actions) {
               // ----- CUSTOM SELECT-V2 -----
               console.log("🧠 Detected custom select-v2 component");
 
-              const dropdown = await page.waitForSelector(`xpath/${action.xpath}`, { visible: true, timeout: 15000 });
-              await dropdown.click();
-              await new Promise(res => setTimeout(res, 800));
-
               for (const opt of action.options || []) {
                 const label = opt.label || opt.value;
+
+                // Check if option is already selected by comparing with displayed value
+                const isAlreadySelected = await page.evaluate((dropdownXpath, optionLabel) => {
+                  const dropdown = document.evaluate(dropdownXpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                  if (dropdown) {
+                    const displayValue = dropdown.querySelector('.select-v2__value');
+                    if (displayValue) {
+                      const currentText = displayValue.textContent.trim();
+                      return currentText === optionLabel;
+                    }
+                  }
+                  return false;
+                }, action.xpath, label);
+
+                if (isAlreadySelected) {
+                  console.log(`⏭️ Skipping (already selected "${label}"): ${action.xpath}`);
+                  continue;
+                }
+
                 console.log(`🧩 Selecting custom option: "${label}"`);
-                const [optionEl] = await page.$x(`//li[normalize-space(text())='${label}']`);
+                const dropdown = await page.waitForSelector(`xpath/${action.xpath}`, { timeout: 15000 });
+                await dropdown.click();
+                await new Promise(res => setTimeout(res, 800));
+
+                const optionEl = await page.waitForSelector(`xpath/${opt.xpath}`, { timeout: 15000 });
                 if (optionEl) {
                   await optionEl.click();
                   await page.waitForNetworkIdle({ idleTime: 500, timeout: 10000 }).catch(() => { });
                   await new Promise(res => setTimeout(res, 800));
                 } else {
                   console.warn(`⚠️ Option "${label}" not found in custom dropdown`);
-                }
-
-                // Reopen dropdown if multiple options to select
-                if (action.options.length > 1 && opt !== action.options.at(-1)) {
-                  console.log("🔁 Reopening custom dropdown...");
-                  await dropdown.click();
-                  await new Promise(res => setTimeout(res, 800));
                 }
               }
             }
@@ -150,7 +185,6 @@ export default async function performActions(page, actions) {
           console.error(`❌ Error handling select for QN_ID ${qn_id}:`, err);
         }
       }
-
 
       else {
         console.warn(`⚠️ Unknown action type: ${action.type}`);
@@ -165,5 +199,3 @@ export default async function performActions(page, actions) {
 
   console.log("🎯 All actions executed!");
 }
-
-

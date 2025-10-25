@@ -1,0 +1,61 @@
+[
+  {
+    "type": "multiselect",
+    "code": null,
+    "question": "Wound(s):",
+    "id": 3051,
+    "options": [
+      {
+        "id": 2050,
+        "label": "Pressure injury (ulcer)",
+        "xpath": null
+      },
+      {
+        "id": 2051,
+        "label": "Closed surgical incision",
+        "xpath": null
+      },
+      {
+        "id": 2052,
+        "label": "Open surgical wound",
+        "xpath": null
+      },
+      {
+        "id": 2053,
+        "label": "Arterial ulcer",
+        "xpath": null
+      },
+      {
+        "id": 2054,
+        "label": "Diabetic ulcer",
+        "xpath": null
+      },
+      {
+        "id": 2055,
+        "label": "Skin tear",
+        "xpath": null
+      },
+      {
+        "id": 2056,
+        "label": "Trauma, full thickness",
+        "xpath": null
+      },
+      {
+        "id": 2057,
+        "label": "Trauma, superficial",
+        "xpath": null
+      },
+      {
+        "id": 2058,
+        "label": "Burn",
+        "xpath": null
+      },
+      {
+        "id": 2059,
+        "label": "Other:",
+        "xpath": null
+      }
+    ],
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[5]/div[2]/div[1]/div[1]"
+  }
+]

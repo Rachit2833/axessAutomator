@@ -1,0 +1,128 @@
+[
+  {
+    "type": "checkbox",
+    "code": null,
+    "question": "Tube feeding present:",
+    "id": 3258,
+    "options": [
+      {
+        "id": 2592,
+        "label": "Type of tube",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]"
+      },
+      {
+        "id": 2593,
+        "label": "Not tolerating feeding",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[2]/div[1]"
+      },
+      {
+        "id": 2594,
+        "label": "Managed by patient",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[2]/div[2]"
+      },
+      {
+        "id": 2595,
+        "label": "Managed by caregiver",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[2]/div[3]"
+      },
+      {
+        "id": 2596,
+        "label": "Patient/Caregiver require training",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[2]/div[4]"
+      },
+      {
+        "id": 2597,
+        "label": "Physician notified: Tube feeding complications",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[2]/div[5]"
+      },
+      {
+        "id": 2598,
+        "label": "Clinical manager notified: Tube feeding complications",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[2]/div[6]"
+      }
+    ]
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Tube feeding present: - Residual (ml)",
+    "id": 3254,
+    "placeholder": "",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Tube feeding present: - Feeding Amount",
+    "id": 3255,
+    "placeholder": "Enter Amount",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Tube feeding present: - Free Water",
+    "id": 3256,
+    "placeholder": "(Amount/Frequency)",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "select",
+    "code": null,
+    "question": "Tube feeding present: - Feeding Frequency",
+    "id": 3257,
+    "options": [
+      {
+        "id": 2590,
+        "text": "Bolus feedings",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/ul[1]/li[1]"
+      },
+      {
+        "id": 2591,
+        "text": "Continuous feedings",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/ul[1]/li[2]"
+      }
+    ],
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]"
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Sodium restriction:",
+    "id": 3259,
+    "placeholder": "Enter Sodium Restriction",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[4]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[6]/div[2]/div[1]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Calorie ADA diet:",
+    "id": 3260,
+    "placeholder": "Enter Calorie ADA Diet Details",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[4]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Supplements:",
+    "id": 3261,
+    "placeholder": "Enter Supplements",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[4]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Fluid restriction:",
+    "id": 3262,
+    "placeholder": "Enter Amount of Fluid Restriction",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[4]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[4]/div[2]/div[1]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Other:",
+    "id": 3263,
+    "placeholder": "Enter Nutritional Requirements",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[4]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  }
+]

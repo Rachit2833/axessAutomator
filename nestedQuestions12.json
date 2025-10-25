@@ -1,0 +1,175 @@
+[
+  {
+    "type": "text",
+    "code": null,
+    "question": "Weak hand grip strength:",
+    "id": 3155,
+    "placeholder": "Enter Location",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Amputation:",
+    "id": 3156,
+    "placeholder": "Enter Location",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[6]/div[2]/div[1]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "checkbox",
+    "code": null,
+    "question": "Aftercare, hip replacement:",
+    "id": 3157,
+    "options": [
+      {
+        "id": 2217,
+        "label": "Anticoagulant side effects",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[1]"
+      },
+      {
+        "id": 2218,
+        "label": "Capillary refill > 3 Sec",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[2]"
+      },
+      {
+        "id": 2219,
+        "label": "Coolness",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[3]"
+      },
+      {
+        "id": 2220,
+        "label": "Cyanosis",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[4]"
+      },
+      {
+        "id": 2221,
+        "label": "Inability to bear weight on operative extremity",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[5]"
+      },
+      {
+        "id": 2222,
+        "label": "Loss of sensation or movement",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[6]"
+      },
+      {
+        "id": 2223,
+        "label": "Pain, increased",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[7]"
+      },
+      {
+        "id": 2224,
+        "label": "Pallor",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[8]"
+      },
+      {
+        "id": 2225,
+        "label": "Paresthesia",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[9]"
+      },
+      {
+        "id": 2226,
+        "label": "Paralysis",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[10]"
+      },
+      {
+        "id": 2227,
+        "label": "Pulses absent/diminished",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[11]"
+      },
+      {
+        "id": 2228,
+        "label": "S/S of DVT",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[12]"
+      },
+      {
+        "id": 2229,
+        "label": "Shortening of operative extremity (limp)",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[13]"
+      },
+      {
+        "id": 2230,
+        "label": "Spasms",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[14]"
+      },
+      {
+        "id": 2231,
+        "label": "Swelling",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[7]/div[2]/div[1]/div[1]/div[1]/div[15]"
+      }
+    ]
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Limited ROM:",
+    "id": 3158,
+    "placeholder": "Enter Location",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[5]/div[2]/div[1]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "text",
+    "code": null,
+    "question": "Contracture:",
+    "id": 3159,
+    "placeholder": "Enter Location",
+    "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[6]/div[2]/div[1]/div[1]/div[1]/div[1]/p[1]/input[1]"
+  },
+  {
+    "type": "checkbox",
+    "code": null,
+    "question": "Autoimmune diseases affecting function:",
+    "id": 3160,
+    "options": [
+      {
+        "id": 2232,
+        "label": "Graves' disease",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[6]/div[2]/div[1]/div[1]/div[1]/div[1]"
+      },
+      {
+        "id": 2233,
+        "label": "Lupus",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[6]/div[2]/div[1]/div[1]/div[1]/div[2]"
+      },
+      {
+        "id": 2234,
+        "label": "Myasthenia gravis",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[6]/div[2]/div[1]/div[1]/div[1]/div[3]"
+      },
+      {
+        "id": 2235,
+        "label": "Multiple sclerosis",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[6]/div[2]/div[1]/div[1]/div[1]/div[4]"
+      },
+      {
+        "id": 2236,
+        "label": "Parkinson's disease",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[6]/div[2]/div[1]/div[1]/div[1]/div[5]"
+      },
+      {
+        "id": 2237,
+        "label": "Psoriasis",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[6]/div[2]/div[1]/div[1]/div[1]/div[6]"
+      },
+      {
+        "id": 2238,
+        "label": "Rheumatoid arthritis",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[6]/div[2]/div[1]/div[1]/div[1]/div[7]"
+      },
+      {
+        "id": 2239,
+        "label": "Scleroderma",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[6]/div[2]/div[1]/div[1]/div[1]/div[8]"
+      },
+      {
+        "id": 2240,
+        "label": "Sjogren's syndrome",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[6]/div[2]/div[1]/div[1]/div[1]/div[9]"
+      },
+      {
+        "id": 2241,
+        "label": "Other:",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div[6]/div[2]/div[1]/div[1]/div[1]/div[10]"
+      }
+    ]
+  }
+]

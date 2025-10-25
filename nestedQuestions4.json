@@ -1,0 +1,105 @@
+[
+  {
+    "type": "checkbox",
+    "code": null,
+    "question": "Home environment, altered:",
+    "id": 3013,
+    "options": [
+      {
+        "id": 2004,
+        "label": "Able to only buy necessities",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]"
+      },
+      {
+        "id": 2005,
+        "label": "Caregiver burnout",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]"
+      },
+      {
+        "id": 2006,
+        "label": "Cluttered/soiled living conditions",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[3]"
+      },
+      {
+        "id": 2007,
+        "label": "Difficulty buying necessities",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[4]"
+      },
+      {
+        "id": 2008,
+        "label": "Difficulty paying rent/utilities",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[5]"
+      },
+      {
+        "id": 2009,
+        "label": "High crime area",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[6]"
+      },
+      {
+        "id": 2010,
+        "label": "Inadequate cooling/heating",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[7]"
+      },
+      {
+        "id": 2011,
+        "label": "Inadequate Refrigeration",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[8]"
+      },
+      {
+        "id": 2012,
+        "label": "Lack of caregiver/family support",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[9]"
+      },
+      {
+        "id": 2013,
+        "label": "Lack of fire safety devices",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[10]"
+      },
+      {
+        "id": 2014,
+        "label": "Limited social contact",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[11]"
+      },
+      {
+        "id": 2015,
+        "label": "Low/no income",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[12]"
+      },
+      {
+        "id": 2016,
+        "label": "Narrow or obstructed walkway",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[13]"
+      },
+      {
+        "id": 2017,
+        "label": "No running water/plumbing",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[14]"
+      },
+      {
+        "id": 2018,
+        "label": "Pests/rodents present",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[15]"
+      },
+      {
+        "id": 2019,
+        "label": "Poor home environment",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[16]"
+      },
+      {
+        "id": 2020,
+        "label": "Structural barriers",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[17]"
+      },
+      {
+        "id": 2021,
+        "label": "Unsafe floor coverings",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[18]"
+      },
+      {
+        "id": 2022,
+        "label": "Other:",
+        "xpath": "/html[1]/body[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[2]/section[1]/section[2]/div[1]/div[1]/div[1]/div[5]/section[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[19]"
+      }
+    ]
+  }
+]
